@@ -10,12 +10,44 @@ class UserController {
     }
   };
 
+  static async listById(req, res) {
+    try {
+      const id = req.params.id;
+      const listUserById = await user.findById(id);
+      res.status(200).json(listUserById);
+    } catch (erro) {
+      res.status(500).json({ message: `${erro.message} - error to list by id` });
+    }
+  };
+
   static async register(req, res) {
     try {
       const newRegister = await user.create(req.body)
       res.status(201).json({message: 'success',  newRegister: newRegister});
     } catch (err) {
       res.status(500).json({message: `${err.message} - error to register user!`});
+    }
+  };
+
+  static async updateById(req, res) {
+    try {
+      const id = req.params.id;
+      await user.findByIdAndUpdate(id, req.body);
+      const listUser = await user.find({});
+      res.status(200).json(listUser);
+    } catch (erro) {
+      res.status(500).json({ message: `${erro.message} - error to update by id` });
+    }
+  };
+
+  static async deleteById(req, res) {
+    try {
+      const id = req.params.id;
+      await user.findByIdAndDelete(id, req.body);
+      const listUser = await user.find({});
+      res.status(200).json(listUser);
+    } catch (erro) {
+      res.status(500).json({ message: `${erro.message} - error to delete by id` });
     }
   };
 };
