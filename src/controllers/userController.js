@@ -14,7 +14,7 @@ class UserController {
     try {
       const id = req.params.id;
       const listUserById = await user.findById(id);
-      res.status(200).json(listUserById);
+      res.status(200).json({ message: 'success', listUserById });
     } catch (erro) {
       res.status(500).json({ message: `${erro.message} - error to list by id` });
     }
@@ -23,9 +23,18 @@ class UserController {
   static async register(req, res) {
     try {
       const newRegister = await user.create(req.body)
-      res.status(201).json({message: 'success',  newRegister: newRegister});
+      res.status(201).json({message: 'success',  newRegister});
     } catch (err) {
       res.status(500).json({message: `${err.message} - error to register user!`});
+    }
+  };
+
+  static async login(req, res) {
+    try {
+      const body = req.body
+      res.status(201).json({ message: 'success', body });
+    } catch (err) {
+      res.status(500).json({ message: `${err.message} - error to login!` });
     }
   };
 

@@ -14,6 +14,15 @@ connect.once('open', () => {
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.header('Acces-Control-Allow-Origin', '*')
+  res.header(
+    'Acces-Control-Allow-Header',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+
+  );
+});
+
 routes(app);
 
 export default app;
